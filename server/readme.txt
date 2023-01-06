@@ -1,0 +1,2 @@
+migrate -path db/migrations -database "postgresql://postgres:postgres@localhost:5432/go-chat?sslmode=disable" -verbase up
+migrate -path db/migrations -database "postgresql://postgres:postgres@localhost:5432/go-chat?sslmode=disable" -verbose up
