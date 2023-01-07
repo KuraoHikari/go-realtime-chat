@@ -1,16 +1,22 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"server/db"
+	"server/internal/user"
+	"server/router"
 )
 
 func main() {
-	_, err := db.NewDatabase()
+	dbConn, err := db.NewDatabase()
 	if err != nil {
 		log.Fatalf("could not initialize connection: %s", err)
 	}
 
-	fmt.Println("maybe connected")
+	userRep := user.NewRepository(dbConn.GetDB())
+	userSvc := user.NewService(userRep)
+	userHandler := user.NewHandler(userSvc)
+
+	router.InitRouter(userHandler)
+	router.Start("0.0.0.0:8080")
 }
